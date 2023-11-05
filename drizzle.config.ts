@@ -2,7 +2,7 @@ import { Config } from "drizzle-kit";
 
 export default {
   schema: "./db/schema.ts",
-  out: "./db",
+  out: "./db/migration",
   driver: "mysql2",
   strict: true,
   verbose: true,

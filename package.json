@@ -6,15 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
+    "db:push": "drizzle-kit push:mysql --config=drizzle.config.ts"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "drizzle-orm": "^0.28.6",
     "lucide-react": "^0.292.0",
     "mysql2": "^3.6.3",
     "next": "14.0.1",
+    "next-auth": "^4.24.4",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.0.0",
