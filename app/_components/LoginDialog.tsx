@@ -5,13 +5,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { LogInIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -39,6 +37,18 @@ export default function LoginDialog() {
             </Link>
           </DialogDescription>
         </DialogHeader>
+
+        <Button onClick={() => signIn("google", { callbackUrl: "/me" })}>
+          Login with Google
+        </Button>
+
+        <div className="flex justify-center items-center">
+          <div className="flex-[1] h-[1px] bg-slate-400 "></div>
+
+          <div className="mx-4">Or</div>
+
+          <div className="flex-[1] h-[1px] bg-slate-400 "></div>
+        </div>
 
         <Button onClick={() => signIn("github", { callbackUrl: "/me" })}>
           Login with Github

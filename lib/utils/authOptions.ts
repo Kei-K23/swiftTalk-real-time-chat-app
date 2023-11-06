@@ -1,54 +1,47 @@
 import { AuthOptions } from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
-import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 
 export const authOptions: AuthOptions = {
   adapter: DrizzleAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/",
-  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "Email",
-          placeholder: "e.g foo@example.com",
-          type: "email",
-        },
-        password: {
-          label: "Password",
-          placeholder: "e.g password123",
-          type: "password",
-        },
-      },
-      async authorize(credentials, req) {
-        const res = await fetch("http://localhost:300/api/users", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        });
-        const user = await res.json();
-        if (res.ok && user) {
-          return user;
-        }
-        return null;
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
+      httpOptions: {
+        timeout: 40000,
       },
     }),
   ],
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          id: u.id,
+        };
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+      };
+    },
   },
 };

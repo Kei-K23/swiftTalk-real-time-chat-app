@@ -51,7 +51,7 @@ export const accounts = mysqlTable(
     expires_at: int("expires_at"),
     token_type: varchar("token_type", { length: 255 }),
     scope: varchar("scope", { length: 255 }),
-    id_token: varchar("id_token", { length: 255 }),
+    id_token: text("id_token"),
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({

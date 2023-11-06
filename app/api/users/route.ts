@@ -40,7 +40,6 @@ export async function GET(req: NextRequest) {
     }
 
     const user = await getUserByEmailAndPassword({ email, password });
-    console.log(user);
     return new NextResponse(JSON.stringify({ data: user, status: 200 }), {
       status: 200,
     });

@@ -24,15 +24,6 @@ const Hero = () => {
 
       <div className="flex justify-center items-center flex-col">
         <LoginDialog />
-
-        <div className="w-full h-[1px] dark:bg-slate-400  bg-black my-4"></div>
-
-        <Button>
-          <Link href={"/register"} className="text-lg">
-            Dont&apos;t have an account! Register first
-          </Link>
-          <User className="ml-2 h-6 w-6" />
-        </Button>
       </div>
     </>
   );

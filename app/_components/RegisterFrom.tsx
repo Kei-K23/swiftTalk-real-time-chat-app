@@ -15,7 +15,6 @@ import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 const registerForm = z
@@ -66,9 +65,10 @@ const RegisterFrom = () => {
 
     if (res.ok && res.status === 201) {
       toast.success(data.message);
-      // return signIn();
+      return redirect("/");
     }
   }
+
   return (
     <div className="w-[90%] md:w-[70%] lg:w-[55%] xl:w-[45%]  mt-10 mb-5  mx-auto">
       <Form {...form}>
