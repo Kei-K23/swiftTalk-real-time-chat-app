@@ -38,7 +38,7 @@ export default function LoginDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <Button onClick={() => signIn("google", { callbackUrl: "/me" })}>
+        <Button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
           Login with Google
         </Button>
 
@@ -50,7 +50,7 @@ export default function LoginDialog() {
           <div className="flex-[1] h-[1px] bg-slate-400 "></div>
         </div>
 
-        <Button onClick={() => signIn("github", { callbackUrl: "/me" })}>
+        <Button onClick={() => signIn("github", { callbackUrl: "/dashboard" })}>
           Login with Github
         </Button>
       </DialogContent>
