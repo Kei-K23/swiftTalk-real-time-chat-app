@@ -1,7 +1,11 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { LogInIcon, User } from "lucide-react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import LoginDialog from "./LoginDialog";
 
 const Hero = () => {
   return (
@@ -19,10 +23,7 @@ const Hero = () => {
       </p>
 
       <div className="flex justify-center items-center flex-col">
-        <Button>
-          <span className="text-lg">Login To SwiftTalk</span>
-          <LogInIcon className="ml-2 h-6 w-6" />
-        </Button>
+        <LoginDialog />
 
         <div className="w-full h-[1px] dark:bg-slate-400  bg-black my-4"></div>
 

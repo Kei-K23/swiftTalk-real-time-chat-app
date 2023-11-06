@@ -7,11 +7,7 @@ export const metadata: Metadata = {
 };
 
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
-  );
+  return <main>{children}</main>;
 };
 
 export default RegisterLayout;

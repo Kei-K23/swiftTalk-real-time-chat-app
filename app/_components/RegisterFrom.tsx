@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+
 const registerForm = z
   .object({
     username: z.string().min(3, {
@@ -62,6 +66,7 @@ const RegisterFrom = () => {
 
     if (res.ok && res.status === 201) {
       toast.success(data.message);
+      // return signIn();
     }
   }
   return (
@@ -133,9 +138,14 @@ const RegisterFrom = () => {
             )}
           />
 
-          <Button type="submit">Register</Button>
+          <Button type="submit">Register </Button>
         </form>
       </Form>
+      <div className="flex justify-center items-center mt-8 underline text-lg">
+        <Link href="/" className="text-center ">
+          Back to landing page
+        </Link>
+      </div>
     </div>
   );
 };
