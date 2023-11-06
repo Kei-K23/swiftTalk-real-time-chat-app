@@ -1,4 +1,4 @@
-import LottieProvider from "@/provider/LottieProvider";
+import LottieProvider from "@/components/provider/LottieProvider";
 import { lottieJSON } from "@/public/lottieJSON";
 import Hero from "./_components/Hero";
 import Navbar from "./_components/Navbar";

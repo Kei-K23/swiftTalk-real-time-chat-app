@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/provider/theme-provider";
+import ToastProvider from "@/components/provider/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,10 @@ export default function RootLayout({
         disableTransitionOnChange
         storageKey="swift-theme"
       >
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          {children}
+          <ToastProvider />
+        </body>
       </ThemeProvider>
     </html>
   );

@@ -6,18 +6,20 @@ import {
   varchar,
   foreignKey,
   AnyMySqlColumn,
+  text,
 } from "drizzle-orm/mysql-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  password: text("password").default("null"),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     fsp: 3,
   }).defaultNow(),
-  image: varchar("image", { length: 255 }),
+  image: varchar("image", { length: 255 }).default("img"),
 });
 
 export const friends = mysqlTable(
