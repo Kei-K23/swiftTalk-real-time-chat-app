@@ -43,3 +43,22 @@ export async function getUserByEmailAndPassword({
     throw new Error(e.message);
   }
 }
+
+export async function getAllUser() {
+  try {
+    const user = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        image: users.image,
+      })
+      .from(users);
+
+    if (!user.length) return false;
+
+    return user;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}

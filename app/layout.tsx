@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import ToastProvider from "@/components/provider/ToastProvider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +23,7 @@ export default function RootLayout({
         disableTransitionOnChange
         storageKey="swift-theme"
       >
-        <body className={inter.className}>
+        <body>
           {children}
           <ToastProvider />
         </body>

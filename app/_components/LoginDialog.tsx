@@ -12,6 +12,7 @@ import {
 
 import { LogInIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginDialog() {
@@ -25,20 +26,27 @@ export default function LoginDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Login To SwiftTalk</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl">Login To SwiftTalk</DialogTitle>
+          {/* <DialogDescription className="text-md">
             You can login to our app using different login providers. If you
             dont have an account! Create account first or you can simply use
             third-party providers.
-          </DialogDescription>
+          </DialogDescription> */}
           <DialogDescription>
-            <Link className="text-blue-400 underline" href={"/register"}>
+            {/* <Link className="text-blue-400 underline" href={"/register"}>
               register link
-            </Link>
+            </Link> */}
           </DialogDescription>
         </DialogHeader>
 
         <Button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
+          <Image
+            src={"/google.png"}
+            alt="google icon"
+            width={30}
+            height={30}
+            className="mr-3"
+          />{" "}
           Login with Google
         </Button>
 
@@ -51,6 +59,13 @@ export default function LoginDialog() {
         </div>
 
         <Button onClick={() => signIn("github", { callbackUrl: "/dashboard" })}>
+          <Image
+            src={"/github.png"}
+            alt="github icon"
+            width={30}
+            height={30}
+            className="mr-3"
+          />{" "}
           Login with Github
         </Button>
       </DialogContent>

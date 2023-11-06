@@ -1,13 +1,13 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { LogInIcon, User } from "lucide-react";
-import { signIn } from "next-auth/react";
-import Link from "next/link";
 import React from "react";
 import LoginDialog from "./LoginDialog";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/utils/authOptions";
+import { buttonVariants } from "@/components/ui/button";
+import { LogInIcon } from "lucide-react";
+const Hero = async () => {
+  const session = await getServerSession(authOptions);
 
-const Hero = () => {
   return (
     <>
       <h1 className="mt-10 md:mt-0 text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-center tracking-wider">
@@ -23,7 +23,17 @@ const Hero = () => {
       </p>
 
       <div className="flex justify-center items-center flex-col">
-        <LoginDialog />
+        {session && session.user ? (
+          <Link
+            className={buttonVariants({ variant: "default", size: "lg" })}
+            href={"/dashboard"}
+          >
+            Welcome back {session.user.name}{" "}
+            <LogInIcon className="ml-2 h-6 w-6" />
+          </Link>
+        ) : (
+          <LoginDialog />
+        )}
       </div>
     </>
   );

@@ -13,7 +13,7 @@ import type { AdapterAccount } from "@auth/core/adapters";
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
+  email: varchar("email", { length: 255 }).notNull(),
   password: text("password").default("null"),
   emailVerified: timestamp("emailVerified", {
     mode: "date",

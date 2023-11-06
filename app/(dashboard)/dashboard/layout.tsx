@@ -20,5 +20,5 @@ export default async function DashboardLayout({
     return redirect("/");
   }
 
-  return <main>{children}</main>;
+  return <main className="h-screen">{children}</main>;
 }
