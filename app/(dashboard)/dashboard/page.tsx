@@ -11,6 +11,7 @@ const Dashboard = async () => {
 
   const users = (await getAllUser()) || [];
   const rooms = (await getAllRooms()) || [];
+
   if (!session) {
     return redirect("/");
   }
