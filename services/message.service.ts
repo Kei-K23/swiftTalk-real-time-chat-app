@@ -2,6 +2,22 @@ import { db } from "@/db";
 import { messages, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+export async function createMessage({
+  message,
+  roomId,
+  userId,
+}: {
+  message: string;
+  roomId: number;
+  userId: string;
+}) {
+  try {
+    await db.insert(messages).values({ message, roomId, userId });
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
 export async function getAllMessagesByRoomId(roomId: number, limit = 15) {
   try {
     const messagesData = await db
