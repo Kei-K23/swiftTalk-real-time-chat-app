@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -21,6 +22,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   currentUserId?: string;
   friendLists?: UserType[];
   roomLists?: RoomType[];
+  selectRoom?: (roomId: number) => void;
 }
 
 export function Sidebar({
@@ -28,6 +30,7 @@ export function Sidebar({
   friendLists,
   currentUserId,
   roomLists,
+  selectRoom,
 }: SidebarProps) {
   return (
     <div className={cn(className)}>
@@ -94,6 +97,9 @@ export function Sidebar({
                   roomLists.map((room) => {
                     return (
                       <div
+                        onClick={() => {
+                          if (selectRoom) selectRoom(room.id as number);
+                        }}
                         className="my-3 bg-neutral-100 dark:bg-neutral-800 p-2 px-4 rounded-xl"
                         key={room.id}
                       >

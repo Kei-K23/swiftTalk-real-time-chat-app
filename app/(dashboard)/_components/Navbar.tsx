@@ -11,7 +11,7 @@ interface NavbarProp {
 
 const Navbar = ({ name, email, image }: NavbarProp) => {
   return (
-    <header className="bg-neutral-100 dark:bg-neutral-900">
+    <header className="bg-neutral-100 dark:bg-neutral-900 h-[8%]">
       <nav className="py-4 px-8  md:px-20 flex justify-between items-center">
         <Link href="/dashboard" className="flex items-center gap-4">
           <Image src="/chat.png" alt="chat icon" width={30} height={50} />
