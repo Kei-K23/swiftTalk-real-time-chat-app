@@ -22,21 +22,19 @@ export async function createUser(payload: UserType) {
   }
 }
 
-export async function getUserByEmailAndPassword({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
+export async function getUserById(id: string) {
   try {
-    const user = await db.select().from(users).where(eq(users.email, email));
+    const user = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        image: users.image,
+      })
+      .from(users)
+      .where(eq(users.id, id));
 
-    if (!user.length) throw new Error("Could not find user! invalid email");
-
-    const authUser = await argon2.verify(user[0].password as string, password);
-
-    if (!authUser) throw new Error("Invalid password!");
+    if (!user.length) return false;
 
     return user[0];
   } catch (e: any) {

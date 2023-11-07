@@ -23,6 +23,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   friendLists?: UserType[];
   roomLists?: RoomType[];
   selectRoom?: (roomId: number) => void;
+  roomId?: number;
 }
 
 export function Sidebar({
@@ -30,6 +31,7 @@ export function Sidebar({
   friendLists,
   currentUserId,
   roomLists,
+  roomId,
   selectRoom,
 }: SidebarProps) {
   return (
@@ -42,7 +44,7 @@ export function Sidebar({
               People
             </h2>
             <ScrollArea className="h-[500px] px-1">
-              <div className="space-y-1 p-2">
+              <div className="p-2">
                 {friendLists &&
                   friendLists?.map((friendList) => {
                     if (friendList.id !== currentUserId) {
@@ -92,7 +94,7 @@ export function Sidebar({
               Chat rooms
             </h2>
             <ScrollArea className="h-[500px] px-1">
-              <div className="space-y-1 p-2">
+              <div className="p-2">
                 {roomLists &&
                   roomLists.map((room) => {
                     return (
@@ -100,7 +102,9 @@ export function Sidebar({
                         onClick={() => {
                           if (selectRoom) selectRoom(room.id as number);
                         }}
-                        className="my-3 bg-neutral-100 dark:bg-neutral-800 p-2 px-4 rounded-xl"
+                        className={`${
+                          roomId === room.id && "ring-1 ring-neutral-400"
+                        } my-3 bg-neutral-100 dark:bg-neutral-800 p-2 px-4 rounded-xl`}
                         key={room.id}
                       >
                         <div
@@ -108,7 +112,7 @@ export function Sidebar({
                           title={`${room.name}'s chat room`}
                         >
                           {room.name === "Global" && (
-                            <Avatar className="h-12 w-12">
+                            <Avatar className="h-11 w-11">
                               <AvatarImage src={"/globe.png"} alt={room.name} />
                               <AvatarFallback>{room.name}</AvatarFallback>
                             </Avatar>

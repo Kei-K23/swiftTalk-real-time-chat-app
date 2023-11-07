@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
-import { createUser, getUserByEmailAndPassword } from "@/services/user.service";
+import { createUser } from "@/services/user.service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,29 +23,17 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
-  try {
-    const { email, password } = await req.json();
+// export async function GET(req: NextRequest) {
+//   try {
+//     const searchParams = req.nextUrl.searchParams;
+//     const id = searchParams.get("id");
 
-    if (!email && !password) {
-      return new NextResponse(
-        JSON.stringify({
-          error: "Missing request fields! email and password is required",
-          status: 400,
-        }),
-        {
-          status: 400,
-        }
-      );
-    }
-
-    const user = await getUserByEmailAndPassword({ email, password });
-    return new NextResponse(JSON.stringify({ data: user, status: 200 }), {
-      status: 200,
-    });
-  } catch (e: any) {
-    return new NextResponse(JSON.stringify({ error: e.message, status: 500 }), {
-      status: 500,
-    });
-  }
-}
+//     return new NextResponse(JSON.stringify({ data: query, status: 200 }), {
+//       status: 200,
+//     });
+//   } catch (e: any) {
+//     return new NextResponse(JSON.stringify({ error: e.message, status: 500 }), {
+//       status: 500,
+//     });
+//   }
+// }

@@ -35,6 +35,7 @@ const Hero = ({ rooms, users, currentUserId }: HeroProp) => {
       <Sidebar
         selectRoom={selectRoom}
         roomLists={rooms}
+        roomId={selectedRoom}
         className="w-[30%] md:w-[24%] lg:w-[17%]  xl:w-[14%] border-l-[1px] dark:border-r-neutral-700 border-r-neutral-300 h-full"
       />
       <ChatPalyGround roomId={selectedRoom} />
