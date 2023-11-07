@@ -13,7 +13,6 @@ import {
 import { LogInIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function LoginDialog() {
   return (

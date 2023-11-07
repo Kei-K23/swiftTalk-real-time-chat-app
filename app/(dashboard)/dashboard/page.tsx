@@ -5,12 +5,13 @@ import { Sidebar } from "../_components/Sidebar";
 import ChatPalyGround from "../_components/ChatPalyground";
 import Navbar from "../_components/Navbar";
 import { getAllUser } from "@/services/user.service";
+import { getAllRooms } from "@/services/rooms.service";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
   const users = (await getAllUser()) || [];
-
+  const rooms = (await getAllRooms()) || [];
   if (!session) {
     return redirect("/");
   }
@@ -25,7 +26,7 @@ const Dashboard = async () => {
 
       <div className="flex justify-between items-center h-auto">
         <Sidebar
-          currentUserId={session.user.id}
+          roomLists={rooms}
           className="w-[30%] md:w-[24%] lg:w-[17%]  xl:w-[14%] border-l-[1px] dark:border-r-neutral-700 border-r-neutral-300"
         />
         <ChatPalyGround />
