@@ -14,6 +14,8 @@ const Dashboard = async () => {
     return redirect("/");
   }
 
+  console.log(session.user);
+
   return (
     <>
       <Navbar

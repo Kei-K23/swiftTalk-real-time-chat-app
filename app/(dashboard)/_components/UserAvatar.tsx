@@ -27,7 +27,10 @@ export function UserAvatar({ email, image, name }: UserAvatarProp) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-12 w-12">
-            <AvatarImage src={image} alt={name} />
+            <AvatarImage
+              src={image === "img" ? "/userProfile.png" : image}
+              alt={name}
+            />
             <AvatarFallback>{name}</AvatarFallback>
           </Avatar>
         </Button>

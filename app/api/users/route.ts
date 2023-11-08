@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
-import { createUser } from "@/services/user.service";
+import { createUser, getUserByEmail } from "@/services/user.service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,17 +23,23 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// export async function GET(req: NextRequest) {
-//   try {
-//     const searchParams = req.nextUrl.searchParams;
-//     const id = searchParams.get("id");
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email");
+    const password = searchParams.get("password");
 
-//     return new NextResponse(JSON.stringify({ data: query, status: 200 }), {
-//       status: 200,
-//     });
-//   } catch (e: any) {
-//     return new NextResponse(JSON.stringify({ error: e.message, status: 500 }), {
-//       status: 500,
-//     });
-//   }
-// }
+    const user = await getUserByEmail({
+      email: email as string,
+      password: password as string,
+    });
+
+    return new NextResponse(JSON.stringify({ data: user, status: 200 }), {
+      status: 200,
+    });
+  } catch (e: any) {
+    return new NextResponse(JSON.stringify({ error: e.message, status: 500 }), {
+      status: 500,
+    });
+  }
+}

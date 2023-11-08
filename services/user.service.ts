@@ -42,6 +42,32 @@ export async function getUserById(id: string) {
   }
 }
 
+export async function getUserByEmail({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  try {
+    const user = await db.select().from(users).where(eq(users.email, email));
+
+    if (!user.length) throw new Error("Invalid email! Could not found user");
+
+    const authUser = argon2.verify(user[0].password as string, password);
+
+    if (!authUser) throw new Error("Invalid password! Could not Login");
+    return {
+      id: user[0].id,
+      email: user[0].email,
+      name: user[0].name,
+      image: user[0].image,
+    };
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+}
+
 export async function getAllUser() {
   try {
     const user = await db

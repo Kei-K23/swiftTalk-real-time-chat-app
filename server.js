@@ -52,7 +52,7 @@ io.on("connect", (socket) => {
     }
 
     // join the room
-    socket.join(user.room);
+    socket.join("Global");
 
     // to user
     socket.emit(
@@ -61,28 +61,28 @@ io.on("connect", (socket) => {
     );
 
     socket.broadcast
-      .to(user.room)
+      .to("Global")
       .emit(
         "message",
         buildMessage(ADMIN, `${user.name} has joined the chat room`)
       );
 
-    io.to(user.room).emit("userLists", {
+    io.to("Global").emit("userLists", {
       users: getUserInRoom(user.room),
     });
   });
 
   socket.on("disconnect", () => {
     const user = getUser(socket.id);
-
+    console.log("disconnect user", user);
     leaveTheChat(socket.id);
     if (user) {
-      io.to(user[0]?.room).emit(
+      io.to("Global").emit(
         "message",
         buildMessage(ADMIN, `${user[0]?.room} has left the room`)
       );
 
-      io.to(user[0]?.room).emit("userLists", {
+      io.to("Global").emit("userLists", {
         users: getUserInRoom(user[0]?.room),
       });
     }

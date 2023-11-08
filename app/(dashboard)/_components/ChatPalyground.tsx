@@ -6,7 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState, useRef } from "react";
 import InputForm from "./InputForm";
 import { Socket } from "socket.io-client";
-
+import LottieProvider from "@/components/provider/LottieProvider";
+import { lottieJSON } from "@/public/lottieJSON";
 interface ChatPalyGroundProp {
   socket: Socket;
   currentUserName?: string | null;
@@ -123,7 +124,10 @@ const ChatPalyGround = ({
             })}
           </div>
         ) : (
-          <h2>no messages to show</h2>
+          <LottieProvider
+            src={lottieJSON.loadingLottie}
+            className="sm:w-[350px] lg:w-[400px] "
+          />
         )}
       </ScrollArea>
       {typingUser !== "" ? (

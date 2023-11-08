@@ -71,8 +71,6 @@ export function Sidebar({
 
   return (
     <div className={cn(className)}>
-      {/* Friend lists for right side bar */}
-
       <div className="space-y-4 py-4">
         <div className="flex justify-center items-center">
           <Badge
@@ -115,5 +113,3 @@ export function Sidebar({
     </div>
   );
 }
-
-// bg-neutral-100 dark:bg-neutral-800

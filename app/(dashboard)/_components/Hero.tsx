@@ -29,7 +29,7 @@ const Hero = ({ users, currentUserId, currentUserName }: HeroProp) => {
 
   socket.on("disconnect", () => {
     setIsSocketConnected(false);
-
+    socket.emit("disconnectRoom", "user leave the room");
     console.log("Disconnected from the server");
   });
 

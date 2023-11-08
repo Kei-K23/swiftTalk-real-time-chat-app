@@ -3,7 +3,7 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-
+import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions: AuthOptions = {
   adapter: DrizzleAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
@@ -20,6 +20,37 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
       httpOptions: {
         timeout: 40000,
+      },
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          placeholder: "e.g foo@example.com",
+          type: "email",
+        },
+        password: {
+          label: "Password",
+          placeholder: "e.g foo123",
+          type: "password",
+        },
+      },
+      async authorize(credentials, req) {
+        const email = credentials?.email;
+        const password = credentials?.password;
+        const res = await fetch(
+          `http://localhost:3000/api/users?email=${email}&password=${password}`,
+          {
+            method: "GET",
+          }
+        );
+        const data = await res.json();
+        if (res.ok && data) {
+          return data.data;
+        } else {
+          return null;
+        }
       },
     }),
   ],
