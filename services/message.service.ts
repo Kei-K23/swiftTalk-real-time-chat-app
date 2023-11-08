@@ -24,6 +24,7 @@ export async function getAllMessagesByRoomId(roomId: number, limit = 15) {
       .select({
         messageId: messages.id,
         message: messages.message,
+        createdAt: messages.createdAt,
         userId: users.id,
         userImg: users.image,
         userEmail: users.email,

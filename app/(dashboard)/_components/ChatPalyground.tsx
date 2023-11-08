@@ -20,6 +20,7 @@ interface Message {
   userImg: string;
   userEmail: string;
   userName: string;
+  createdAt: Date;
 }
 
 const ChatPalyGround = ({
@@ -113,6 +114,7 @@ const ChatPalyGround = ({
                         "13f87cc8-4370-43d3-9020-6d7be7e380b3" && (
                         <span className="text-red-600">(Admin)</span>
                       )}
+                      <span>{new String(message.createdAt)}</span>
                     </div>
                     <p>{message.message}</p>
                   </div>
