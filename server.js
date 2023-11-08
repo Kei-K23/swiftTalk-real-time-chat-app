@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     const user = getUser(socket.id);
-
+    console.log(user);
     leaveTheChat(socket.id);
     if (user) {
       io.to(user[0]?.room).emit(
@@ -91,7 +91,6 @@ io.on("connection", (socket) => {
 
   socket.on("message", ({ name, text }) => {
     const user = getUser(socket.id);
-    console.log(user);
     if (user) {
       const room = user[0]?.room;
       io.to(room).emit("message", buildMessage(name, text));
@@ -100,7 +99,6 @@ io.on("connection", (socket) => {
 
   socket.on("activity", (name) => {
     const user = getUser(socket.id);
-
     if (user) {
       const room = user[0]?.room;
       socket.broadcast.to(room).emit("activity", name);
@@ -137,7 +135,7 @@ function activateUser(id, name, room) {
 
 // remove user from array when they leave
 function leaveTheChat(id) {
-  UserState.setUsers(UserState.users.filter((user) => user !== id));
+  UserState.setUsers(UserState.users.filter((user) => user.id !== id));
 }
 
 function getUser(id) {
@@ -146,9 +144,12 @@ function getUser(id) {
 
 function getUserInRoom(room) {
   const userArray = UserState.users.filter((user) => user.room === room);
-
-  return userArray.reduce((acc, curr) => {
-    acc.push(curr.name);
-    return acc;
-  }, []);
+  return Array.from(
+    new Set(
+      userArray.reduce((acc, curr) => {
+        acc.push(curr.name);
+        return acc;
+      }, [])
+    )
+  );
 }

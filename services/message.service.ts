@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { messages, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export async function createMessage({
   message,
@@ -32,6 +32,7 @@ export async function getAllMessagesByRoomId(roomId: number, limit = 15) {
       .from(messages)
       .where(eq(messages.roomId, roomId))
       .leftJoin(users, eq(users.id, messages.userId))
+      .orderBy(desc(messages.createdAt))
       .limit(limit);
     if (!messagesData.length) return false;
     return messagesData;
