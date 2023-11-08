@@ -25,7 +25,7 @@ const io = new Server(expressServer, {
       : ["http://localhost:3000", "http://localhost"],
 });
 
-io.on("connection", (socket) => {
+io.on("connect", (socket) => {
   console.log(`User ${socket.id} is connected`);
 
   socket.on("enterRoom", ({ name, room }) => {
@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     const user = getUser(socket.id);
-    console.log(user);
+
     leaveTheChat(socket.id);
     if (user) {
       io.to(user[0]?.room).emit(

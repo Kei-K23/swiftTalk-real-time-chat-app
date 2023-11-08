@@ -3,14 +3,12 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Navbar from "../_components/Navbar";
 import { getAllUser } from "@/services/user.service";
-import { getAllRooms } from "@/services/rooms.service";
 import Hero from "../_components/Hero";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
   const users = (await getAllUser()) || [];
-  const rooms = (await getAllRooms()) || [];
 
   if (!session) {
     return redirect("/");
@@ -26,7 +24,6 @@ const Dashboard = async () => {
       <Hero
         currentUserId={session.user.id}
         currentUserName={session.user.name}
-        rooms={rooms}
         users={users}
       />
     </>

@@ -12,27 +12,24 @@ type UserType = {
   email?: string | null;
 };
 
-type RoomType = {
-  name?: string;
-  id?: number;
-  ownerId?: string | null;
-};
-
 interface HeroProp {
   users: UserType[];
-  rooms: RoomType[];
   currentUserId: string;
   currentUserName?: string | null;
 }
 
-const Hero = ({ rooms, users, currentUserId, currentUserName }: HeroProp) => {
+const Hero = ({ users, currentUserId, currentUserName }: HeroProp) => {
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+
   const socket = io("http://localhost:8090");
 
-  socket.on("connection", () => {
-    console.log(socket.connected); // true
+  socket.on("connect", () => {
+    setIsSocketConnected(true);
   });
 
   socket.on("disconnect", () => {
+    setIsSocketConnected(false);
+
     console.log("Disconnected from the server");
   });
 
@@ -53,6 +50,7 @@ const Hero = ({ rooms, users, currentUserId, currentUserName }: HeroProp) => {
         currentUserId={currentUserId}
         className="w-[30%] md:w-[24%] lg:w-[17%] xl:w-[14%] border-r-[1px] dark:border-l-neutral-700 border-l-neutral-300 h-full"
         friendLists={users}
+        isSocketConnected={isSocketConnected}
       />
     </div>
   );
