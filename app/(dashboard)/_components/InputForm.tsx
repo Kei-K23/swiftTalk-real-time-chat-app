@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SendIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { Socket } from "socket.io-client";
 import { z } from "zod";
 
 const registerForm = z.object({
@@ -12,7 +13,17 @@ const registerForm = z.object({
   }),
 });
 
-const InputForm = () => {
+interface InputFormProp {
+  socket: Socket;
+  currentUserName?: string | null;
+  currentUserId: string;
+}
+
+const InputForm = ({
+  socket,
+  currentUserName,
+  currentUserId,
+}: InputFormProp) => {
   const form = useForm<z.infer<typeof registerForm>>({
     resolver: zodResolver(registerForm),
     defaultValues: {
@@ -20,12 +31,29 @@ const InputForm = () => {
     },
   });
 
-  async function onSubmit(value: z.infer<typeof registerForm>) {}
+  async function onSubmit(value: z.infer<typeof registerForm>) {
+    await fetch("http://localhost:3000/api/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: value.message,
+        roomId: 1,
+        userId: currentUserId,
+      }),
+    });
+
+    socket.emit("message", {
+      name: currentUserName,
+      text: value.message,
+    });
+  }
 
   return (
     <Form {...form}>
       <form
-        // onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex justify-between  items-center w-full gap-3 px-3"
       >
         <FormField

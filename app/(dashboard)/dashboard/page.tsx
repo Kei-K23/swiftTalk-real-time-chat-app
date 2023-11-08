@@ -23,7 +23,12 @@ const Dashboard = async () => {
         name={session.user?.name as string}
         image={session.user?.image as string}
       />
-      <Hero currentUserId={session.user.id} rooms={rooms} users={users} />
+      <Hero
+        currentUserId={session.user.id}
+        currentUserName={session.user.name}
+        rooms={rooms}
+        users={users}
+      />
     </>
   );
 };

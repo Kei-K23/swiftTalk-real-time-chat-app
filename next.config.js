@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ["argon2", "mysql2"],
+    serverComponentsExternalPackages: [
+      "argon2",
+      "mysql2",
+      "socket.io",
+      "socket.io-client",
+    ],
   },
   images: {
     remotePatterns: [

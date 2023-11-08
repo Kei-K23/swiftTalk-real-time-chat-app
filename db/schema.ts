@@ -103,8 +103,8 @@ export const messages = mysqlTable("messages", {
     (): AnyMySqlColumn => users.id
   ),
   roomId: int("roomId").references((): AnyMySqlColumn => rooms.id),
-  // createdAt: timestamp("created_at", {
-  //   mode: "date",
-  //   fsp: 3,
-  // }).defaultNow(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    fsp: 3,
+  }).defaultNow(),
 });

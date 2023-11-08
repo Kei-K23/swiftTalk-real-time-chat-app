@@ -5,9 +5,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useEffect, useState } from "react";
 import InputForm from "./InputForm";
+import { Socket } from "socket.io-client";
 
 interface ChatPalyGroundProp {
   roomId: number;
+  socket: Socket;
+  currentUserName?: string | null;
+  currentUserId: string;
 }
 
 interface Message {
@@ -19,18 +23,26 @@ interface Message {
   userName: string;
 }
 
-const ChatPalyGround = ({ roomId }: ChatPalyGroundProp) => {
+const ChatPalyGround = ({
+  roomId,
+  socket,
+  currentUserName,
+  currentUserId,
+}: ChatPalyGroundProp) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [liveMessage, setLiveMessage] = useState({ message: "" });
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: roomId }),
-        });
+        const res = await fetch(
+          `http://localhost:3000/api/messages?id=${roomId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (res.ok) {
           const { data } = await res.json();
           if (Array.isArray(data)) {
@@ -51,7 +63,12 @@ const ChatPalyGround = ({ roomId }: ChatPalyGroundProp) => {
     };
 
     fetchMessages();
-  }, [roomId]);
+  }, [roomId, liveMessage]);
+
+  socket.on("message", (data) => {
+    const { message, name } = data;
+    setLiveMessage({ message: message });
+  });
 
   return (
     <div className="flex-1 bg-neutral-100 dark:bg-neutral-800 h-full w-full">
@@ -94,7 +111,11 @@ const ChatPalyGround = ({ roomId }: ChatPalyGroundProp) => {
           <h2>no messages to show</h2>
         )}
       </ScrollArea>
-      <InputForm />
+      <InputForm
+        socket={socket}
+        currentUserName={currentUserName}
+        currentUserId={currentUserId}
+      />
     </div>
   );
 };
