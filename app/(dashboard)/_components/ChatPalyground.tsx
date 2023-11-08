@@ -97,12 +97,12 @@ const ChatPalyGround = ({
                   <Avatar className="h-11 w-11">
                     <AvatarImage
                       src={`${
-                        message.userImg
-                          ? message.userId ===
+                        message.userImg && message.userImg === "img"
+                          ? "/userProfile.png"
+                          : message.userId ===
                             "13f87cc8-4370-43d3-9020-6d7be7e380b3"
-                            ? "/admin_icon_dark.png"
-                            : message.userImg
-                          : "/user.png"
+                          ? "/admin_icon_dark.png"
+                          : message.userImg
                       }`}
                       alt={`${message.userName}'s avatar`}
                     />

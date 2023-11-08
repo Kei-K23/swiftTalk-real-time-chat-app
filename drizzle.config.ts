@@ -1,5 +1,6 @@
 import { Config } from "drizzle-kit";
-
+import dotenv from "dotenv";
+dotenv.config();
 export default {
   schema: "./db/schema.ts",
   out: "./db/migration",
@@ -7,9 +8,9 @@ export default {
   strict: true,
   verbose: true,
   dbCredentials: {
-    host: "localhost",
-    user: "kei",
-    password: "mypassword",
-    database: "real_time_chat_app",
+    host: process.env.DB_HOST as string,
+    user: process.env.DB_USER_NAME as string,
+    password: process.env.DB_PASSWORD as string,
+    database: process.env.DB_DATABASE as string,
   },
 } satisfies Config;
